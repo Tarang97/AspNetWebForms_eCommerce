@@ -1,0 +1,47 @@
+﻿.btn-round {
+    border-radius: 17px;
+    border: 0;
+    color: #ffffff;
+}
+.btn-round:hover {
+    color: #000000;
+}
+/*Place Order button*/
+.btn-round-lg {
+    border-radius: 22.5px;
+}
+
+.btn-round {
+    border-radius: 17px;
+}
+
+.btn-cart {
+    float: right;
+    border: 0;
+    background-color: #0083FF;
+    color: #ffffff;
+    transition: color 300ms ease-in-out 0s, background-color 300ms ease-in-out 0s, background-position 300ms ease-in-out 0s;
+    text-transform: uppercase;
+}
+
+.btn-cart:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+/*Contact*/
+.button {
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    line-height: normal;
+    padding: 8px 16px;
+    border: 2px solid #6987ab;
+    font-weight: 700;
+    background-color: #ecf4fc;
+    color: #6987ab;
+    border-radius: 50px;
+    text-transform: uppercase;
+}
+.button:focus {
+    outline: none;
+}

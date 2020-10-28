@@ -1,0 +1,11 @@
+<asp:HiddenField ID="FriendlyErrorMsg2" runat="server" />
+<asp:Panel ID="DetailedErrorPanel" Visible="false" runat="server">
+    <p>&nbsp;</p>
+    <h4>Detailed Error:</h4>
+    <p><asp:Label ID="ErrorDetailedMsg" runat="server" Font-Size="Small"></asp:Label><br /></p>
+    <h4>Error Handler:</h4>
+    <p><asp:Label ID="ErrorHandler" runat="server" Font-Size="Small"></asp:Label><br /></p>
+    <h4>Detailed Error Message:</h4>
+    <p><asp:Label ID="InnerMessage" runat="server" Font-Size="Small"></asp:Label><br /></p>
+    <p><asp:Label ID="InnerTrace" runat="server"></asp:Label></p>
+</asp:Panel>

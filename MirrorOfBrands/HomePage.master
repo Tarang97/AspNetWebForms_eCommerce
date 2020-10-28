@@ -1,0 +1,485 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="HomePage.master.cs" Inherits="HomePage" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <meta name="title" content="Mirror of Brands" />
+    <meta name="description" content="MirrorofBrands.com: Online Shopping India - Buy mobiles, cameras, watches, apparel, shoes. Free Shipping & Cash on Delivery Available." />
+    <meta name="keywords" content="MirrorofBrands.com, Mirror, Online Shopping, online shopping india, india shopping online, mirror of brands india, mob, buy online, buy mobiles online, watches, fashion jewellery, electronic products, apparels, accessories, audio devices, audio appliances" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="language" content="English" />
+    <meta name="google" content="nositelinksearchbox" />
+    <meta name="google-site-verification" content="w8RRvIuUXpS_LrxW40BMikUIVeICYTlqFaxdNiyvlv4" />
+
+    <!-- Mobile specific metas  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicon  -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+    <!-- Manifest -->
+    <link rel="manifest" href="site.webmanifest">
+
+    <!-- CSS Style -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Button CSS -->
+    <link href="css/custom/button.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!-- Mobile Menu -->
+        <div id="jtv-mobile-menu">
+            <ul>
+                <li><a href="Index.aspx" title="Home">Home</a></li>
+                <asp:Repeater ID="rptrMobileCat" runat="server">
+                    <ItemTemplate>
+                        <li><a href='Products.aspx?cat=<%# MirrorOfBrands.Crypto.GetencryptedQueryString(Eval("CatID").ToString()) %>' title="<%# Eval("CatName") %>"><%# Eval("CatName") %></a></li>
+                    </ItemTemplate>
+                </asp:Repeater>
+                <li><a href="javascript:void(0)">More</a>
+                    <div id="mSubMenu" runat="server">
+                        <ul>
+                            <asp:Repeater ID="rptrmSubMenu" runat="server">
+                                <ItemTemplate>
+                                    <li><a href='Products.aspx?cat=<%# MirrorOfBrands.Crypto.GetencryptedQueryString(Eval("CatID").ToString()) %>' title="<%# Eval("CatName") %>"><span><%# Eval("CatName") %></span></a></li>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="Contact.aspx" title="Contact Us">Contact</a></li>
+            </ul>
+            <div class="jtv-top-link-mob">
+                <ul class="links">
+                    <% if (Session["EMAIL"] == null)
+                        { %>
+                    <li class="last"><a title="Login" href="Login.aspx"><span>Login</span></a></li>
+                    <li class="last"><a title="Register" href="Signup.aspx"><span>Register</span></a></li>
+                    <% }
+                        else
+                        { %>
+                    <li class="last"><a title="My Profile" href="UserProfile.aspx"><span>My Account</span></a></li>
+                    <li class="last"><a title="Wishlist" href="Wishlist.aspx"><span>Wishlist</span>&nbsp;<span class="badge badge-secondary" id="spanmWCount" runat="server"></span></a></li>
+                    <li>
+                        <asp:LinkButton ID="lbSignOut" CssClass="last" OnClick="lbSignOut_Click" runat="server" ToolTip="Log Out"><span>Log Out</span></asp:LinkButton></li>
+                    <% } %>
+                    <% if (Session["EMAIL"] != null)
+                        { %>
+
+                    <% if (Session["EMAIL"].ToString() == "director@mirrorofbrands.com")
+                        { %>
+                    <li class="login"><a href="AdminDash.aspx" title="Admin Panel"><span class="hidden-xs">Manage</span></a></li>
+                    <% }
+                        else
+                        {
+
+                        } %>
+                    <% }
+                        else { }%>
+                </ul>
+            </div>
+        </div>
+        <!-- /Mobile Menu -->
+
+        <div id="page">
+            <!-- Header -->
+            <header class="jtv-header-v2">
+                <div class="header-lines-decoration"><span class="bg-secondary-color"></span><span class="bg-blue"></span><span class="bg-blue-light"></span><span class="bg-orange-light"></span><span class="bg-red"></span><span class="bg-green"></span><span class="bg-secondary-color"></span></div>
+                <div class="header-container">
+                    <div class="header-top">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-5 col-sm-4 col-xs-12">
+                                    <!-- Default Welcome Message -->
+                                    <div class="welcome-msg hidden-xs hidden-sm">
+                                        <% if (Session["EMAIL"] != null)
+                                            {
+                                                lblSuccess.Text = "Welcome " + Session["USERNAME"].ToString() + "!";%>
+                                        <asp:Label ID="lblSuccess" runat="server"></asp:Label>
+                                        <% }
+                                            else
+                                            { %>
+                                            Welcome Guest!
+                                            <% } %>
+                                    </div>
+                                    <div class="jtv-lang-cur-wrapper">
+                                        <div class="jtv-inner-box">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- top links -->
+                                <div class="toplinks col-md-7 col-sm-8 col-xs-12 hidden-xs">
+                                    <ul class="links">
+                                        <% if (Session["EMAIL"] == null)
+                                            { %>
+                                        <li class="blog"><a title="Register" href="Signup.aspx"><span class="hidden-xs">Register</span></a></li>
+                                        <li class="login"><a title="Log In" href="Login.aspx"><span class="hidden-xs">Log In</span></a></li>
+                                        <% }
+                                            else
+                                            { %>
+                                        <li class="myaccount"><a title="My Account" href="UserProfile.aspx"><span class="hidden-xs">My Account</span></a></li>
+                                        <li class="wishlist"><a title="Wishlist" href="Wishlist.aspx"><span class="hidden-xs">Wishlist</span>&nbsp;<span class="badge badge-secondary" id="spanWCount" runat="server"></span></a></li>
+                                        <li class="blog"><asp:LinkButton ID="btnSignOut" ToolTip="Log Out" runat="server" OnClick="btnSignOut_Click"><span class="hidden-xs">Log Out</span></asp:LinkButton></li>
+                                        <% } %>
+
+                                        <% if (Session["EMAIL"] != null)
+                                            { %>
+
+                                        <% if (Session["EMAIL"].ToString() == "director@mirrorofbrands.com")
+                                            { %>
+                                        <li class="login"><a href="AdminDash.aspx" title="Admin Panel"><span class="hidden-xs">Manage</span></a></li>
+                                        <% }
+                                            else
+                                            {
+
+                                            } %>
+                                        <% }
+                                            else { }%>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <nav>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 jtv-logo-block">
+                                    <div class="logo" style="margin: 0;">
+                                        <a title="Mirror of Brands" href="Index.aspx">
+                                            <img alt="Mirror of Brands" src="images/MirrorOfBrands.png" style="width: 200px; height: 90px;"></a>
+                                    </div>
+                                    <!-- Navbar -->
+
+                                    <div class="nav-inner">
+                                        <div class="mm-toggle-wrap hidden-lg">
+                                            <div class="mm-toggle"><i class="fa fa-align-justify"></i><span class="mm-label hidden">Menu</span> </div>
+                                        </div>
+                                        <ul id="nav" class="hidden-xs hidden-sm">
+                                            <li class="level-a drop-menu"><a href="Index.aspx" title="Home"><span>Home</span></a>
+                                            </li>
+                                            <asp:Repeater ID="rptrCategories" runat="server">
+                                                <ItemTemplate>
+                                                    <li class="level-a jtv-level-top"><a href='Products.aspx?cat=<%# MirrorOfBrands.Crypto.GetencryptedQueryString(Eval("CatID").ToString()) %>' title="<%# Eval("CatName") %>"><span><%# Eval("CatName") %></span></a></li>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                            <li class="level-a drop-menu"><a href="javascript:void(0)"><span>More</span></a>
+                                                <div id="divSM" runat="server">
+                                                    <ul class="level-b">
+                                                        <asp:Repeater ID="rptrSubMenu" runat="server">
+                                                            <ItemTemplate>
+                                                                <li class="level-b"><a href='Products.aspx?cat=<%# MirrorOfBrands.Crypto.GetencryptedQueryString(Eval("CatID").ToString()) %>' title="<%# Eval("CatName") %>"><span><%# Eval("CatName") %></span></a></li>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="level-a drop-menu"><a href="Contact.aspx" title="Contact Us"><span>Contact</span></a>
+                                            </li>
+                                        </ul>
+
+                                        <!-- top cart -->
+                                        <div class="top-cart">
+                                            <div class="top-cart-contain">
+                                                <div class="mini-cart">
+                                                    <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle">
+                                                        <a href="#" id="btnCart">
+                                                            <div class="shoppingcart-inner"><span class="cart-title"><i class="fa fa-shopping-cart"></i></span><span class="cart_count" id="pCount" runat="server"></span></div>
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <div class="top-cart-content">
+                                                            <div class="block-subtitle hidden-xs" id="spanNoItems" runat="server"></div>
+                                                            <ul id="cart-sidebar" class="mini-products-list">
+                                                                <asp:Repeater ID="rptrCartProducts" runat="server">
+                                                                    <ItemTemplate>
+                                                                        <li class="item odd"><a href='ProductDetails.aspx?product=<%# MirrorOfBrands.Crypto.GetencryptedQueryString(Eval("PID").ToString()) %>' title="<%# Eval("PName") %>" class="product-image">
+                                                                            <img src="images/ProductImages/<%# Eval("PID") %>/<%# Eval("Name") %><%# Eval("Extension") %>" alt="<%# Eval("Name") %>" onerror="this.src='images/ProductImages/noimage.jpg'"" width="65"></a>
+                                                                            <div class="product-details">
+                                                                                <asp:Button ID="btnRemoveItem" runat="server" Text="&times;" CssClass="button btn-round pull-right" OnClick="btnRemoveItem_Click" CommandName="DeleteCart" CommandArgument='<%# Eval("UniqueID") %>' /> <!--Remove Item -->
+                                                                                <p class="product-name" title="<%# Eval("PName") %>"><%# Eval("PName") %></p> 
+                                                                                <span class="price"><%# Eval("Quantity") %> x &#8377;<%# Eval("PSelPrice") %></span><br /><small style="text-transform: uppercase;">Size/Color/Storage : <%# Eval("SizeName") %></small>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ItemTemplate>
+                                                                </asp:Repeater>
+                                                            </ul>
+                                                            <div class="top-subtotal" runat="server" id="tfootPriceDetails">Subtotal: <span class="price" id="strongTotal" runat="server" style="font-size: 13px;"></span></div>
+                                                            <div class="actions" runat="server" id="divCheckoutBtn">
+                                                                <asp:Button ID="btnCheckOut" runat="server" ToolTip="CheckOut" CssClass="btn-checkout" Text="CheckOut" PostBackUrl="~/CheckOut.aspx" />
+                                                                <asp:Button ID="btnShopCart" runat="server" ToolTip="Go to Cart" CssClass="view-cart" Text="View Cart" PostBackUrl="~/ShoppingCart.aspx" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                                        <div class="jtv-search-block">
+                                            <div class="search">
+                                                <input class="search_box" type="checkbox" id="search_box" />
+                                                <label class="fa fa-search" for="search_box"></label>
+                                                <div class="search_form">
+                                                    <asp:TextBox ID="tbSearch" runat="server" ToolTip="Click Search after Input"></asp:TextBox>
+                                                    <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender2" runat="server" TargetControlID="tbSearch" FilterType="LowercaseLetters" />
+                                                    <input type="button" value="Search" id="btnSearch" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end nav -->
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+            <!-- end header -->
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <!-- Footer -->
+            <footer>
+                <div class="footer-top">
+                    <div class="container">
+                        <div class="row">
+                            <div style="text-align: center">
+                                <a href="Index.aspx">
+                                    <img class="img-responsive" src="images/MirrorOfBrands.png" style="width: 200px; height: 90px;" alt="Mirror Of Brands">
+                                </a>
+                            </div>
+                            <address>
+                                <p><i class="fa fa-map-marker"></i>Ahmedabad, Gujarat, India - 380006
+                                <p><i class="fa fa-phone"></i><span>+ (91)-7285094522</span> </p>
+                                <p><i class="fa fa-envelope"></i><span><a href="mailto:support@mirrorofbrands.com">support@mirrorofbrands.com</a></span></p>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 col-xs-12 col-md-3">
+                                <div class="footer-links">
+                                    <h4>Useful links</h4>
+                                    <ul class="links">
+                                        <li><a title="Gift Vouchers" href="javascript:void(0)">Gift Vouchers</a></li>
+                                        <li><a title="Returns &amp; Exchange" href="ReturnPolicy.aspx">Return Policy</a></li>
+                                        <li><a title="Shipping Options" href="ShippingOpt.aspx">Shipping Policy</a></li>
+                                        <li><a title="Help &amp; FAQs" href="FAQs.aspx">Help &amp; FAQs</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-12 col-md-3">
+                                <div class="footer-links">
+                                    <h4>Service</h4>
+                                    <ul class="links">
+                                        <li><a title="Account" href="Login.aspx">Account</a></li>
+                                        <li><a title="Wishlist" href="Wishlist.aspx">Wishlist</a></li>
+                                        <li><a title="Shopping Cart" href="ShoppingCart.aspx">Shopping Cart</a></li>
+                                        <li><a title="Privacy Policy" href="Privacy.aspx">Privacy Policy</a></li>
+                                        <li><a title="Terms &amp; Conditions" href="Terms-Condition.aspx">Terms & Conditions</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-12 col-md-2">
+                                <div class="footer-links">
+                                    <h4>Information</h4>
+                                    <ul class="links">
+                                        <li><a title="Sitemap" href="Sitemap.aspx">Site Map</a></li>
+                                        <li><a title="News" href="javascript:void(0)">News</a></li>
+                                        <li><a title="About Us" href="About.aspx">About Us</a></li>
+                                        <li><a title="Contact Us" href="Contact.aspx">Contact Us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4">
+                                <div class="footer-links">
+                                    <div class="footer-newsletter">
+                                        <h4>Subscribe to our news</h4>
+                                        <div class="newsletter-inner">
+                                            <p>Subscribe to be the first to know about Sales, Events, and Exclusive Offers!</p>
+                                            <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server" TargetControlID="txtEmail" FilterType="LowercaseLetters, Numbers, Custom" ValidChars=".@" />
+                                            <asp:TextBox ID="txtEmail" CssClass="newsletter-email" placeholder="Enter Your Email" runat="server"></asp:TextBox>
+                                            <asp:Button ID="btnSubscribe" OnClick="btnSubscribe_Click" runat="server" CssClass="button subscribe" Text="Subscribe" style = "letter-spacing: 0; margin-top: 6px;" />
+                                        </div>
+                                        <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label>
+                                    </div>
+                                    <div class="social">
+                                        <h4>Follow Us</h4>
+                                        <ul class="inline-mode">
+                                            <li class="social-network fb"><a title="Connect us on Facebook" href="https://www.facebook.com/Mirror-of-Brands-332915044211821/"><i class="fa fa-facebook"></i></a></li>
+                                            <li class="social-network linkedin"><a title="Connect us on Linkedin" href="https://www.linkedin.com/in/mirror-of-brands-b4597b178"><i class="fa fa-linkedin"></i></a></li>
+                                            <li class="social-network instagram"><a title="Connect us on Instagram" href="https://instagram.com/mirror_of_brands_?utm_source=ig_profile_share&igshid=17jnq3bzeztup"><i class="fa fa-instagram"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-7 col-md-6 col-xs-12 coppyright">Copyright © 2018 <a href="Index.aspx">Mirror of Brands </a>. All Rights Reserved. </div>
+                            <div class="col-sm-5 col-md-6 col-xs-12 payment-accept">
+                                <ul>
+                                    <li><a href="javascript:void(0)">
+                                        <img class="img-responsive" src="images/payment-1.png" alt="Paytm"></a></li>
+                                    <li><a href="javascript:void(0)">
+                                        <img class="img-responsive" src="images/payment-2.png" alt="Visa"></a></li>
+                                    <li><a href="javascript:void(0)">
+                                        <img class="img-responsive" src="images/payment-3.png" alt="American Express"></a></li>
+                                    <li><a href="javascript:void(0)">
+                                        <img class="img-responsive" src="images/payment-4.png" alt="Master Card"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- /End Footer -->
+        </div>
+    </form>
+
+<!-- jquery js --> 
+<script src="js/jquery.min.js" type="text/javascript"></script>
+
+<!-- Cart Link JS -->
+<script src="js/CartlinkJS.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSearch").click(function () {
+            if ($('#<%=tbSearch.ClientID%>').val() == "") {
+                alert("Please Enter Search Value");
+            }
+            else {
+                window.location.href = "/Search.aspx?term=" + document.getElementById('<%=tbSearch.ClientID%>').value;
+            }
+        });
+    });
+</script>
+
+<!-- bootstrap js --> 
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+<!-- jquery-ui js --> 
+<script src="js/jquery-ui.js" type="text/javascript"></script>
+
+<!-- owl.carousel.min js --> 
+<script src="js/owl.carousel.min.js" type="text/javascript"></script> 
+
+<!-- jtv-jtv-mobile-menu js --> 
+<script src="js/jtv-mobile-menu.js" type="text/javascript"></script> 
+
+<!-- countdown js --> 
+<script src="js/countdown.js" type="text/javascript"></script> 
+
+<!-- main js --> 
+<script src="js/main.js" type="text/javascript"></script> 
+
+<!-- rev-slider js --> 
+<script src="js/rev-slider.js" type="text/javascript"></script> 
+
+<!-- cloud zoom js --> 
+<script src="js/cloud-zoom.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery('#rev_slider_4').show().revolution({
+            dottedOverlay: 'none',
+            delay: 5000,
+            startwidth: 1300,
+            startheight: 620,
+
+            hideThumbs: 200,
+            thumbWidth: 200,
+            thumbHeight: 50,
+            thumbAmount: 2,
+
+            navigationType: 'thumb',
+            navigationArrows: 'solo',
+            navigationStyle: 'round',
+
+            touchenabled: 'on',
+            onHoverStop: 'on',
+
+            swipe_velocity: 0.7,
+            swipe_min_touches: 1,
+            swipe_max_touches: 1,
+            drag_block_vertical: false,
+
+            spinner: 'spinner0',
+            keyboardNavigation: 'off',
+
+            navigationHAlign: 'center',
+            navigationVAlign: 'bottom',
+            navigationHOffset: 0,
+            navigationVOffset: 20,
+
+            soloArrowLeftHalign: 'left',
+            soloArrowLeftValign: 'center',
+            soloArrowLeftHOffset: 20,
+            soloArrowLeftVOffset: 0,
+
+            soloArrowRightHalign: 'right',
+            soloArrowRightValign: 'center',
+            soloArrowRightHOffset: 20,
+            soloArrowRightVOffset: 0,
+
+            shadow: 0,
+            fullWidth: 'on',
+            fullScreen: 'off',
+
+            stopLoop: 'off',
+            stopAfterLoops: -1,
+            stopAtSlide: -1,
+
+            shuffle: 'off',
+
+            autoHeight: 'off',
+            forceFullWidth: 'on',
+            fullScreenAlignForce: 'off',
+            minFullScreenHeight: 0,
+            hideNavDelayOnMobile: 1500,
+
+            hideThumbsOnMobile: 'off',
+            hideBulletsOnMobile: 'off',
+            hideArrowsOnMobile: 'off',
+            hideThumbsUnderResolution: 0,
+
+
+            hideSliderAtLimit: 0,
+            hideCaptionAtLimit: 0,
+            hideAllCaptionAtLilmit: 0,
+            startWithSlide: 0,
+            fullScreenOffsetContainer: ''
+        });
+    });
+        </script> 
+
+<!-- Hot Deals Timer 1--> 
+<script type="text/javascript">
+    var dthen1 = new Date("12/25/17 11:59:00 PM");
+    start = "08/04/15 03:02:11 AM";
+    start_date = Date.parse(start);
+    var dnow1 = new Date(start_date);
+    if (CountStepper > 0)
+        ddiff = new Date((dnow1) - (dthen1));
+    else
+        ddiff = new Date((dthen1) - (dnow1));
+    gsecs1 = Math.floor(ddiff.valueOf() / 1000);
+
+    var iid1 = "countbox_1";
+    CountBack_slider(gsecs1, "countbox_1", 1);
+</script>
+</body>
+</html>
